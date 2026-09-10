@@ -15,7 +15,7 @@ const shared = {
   fontFamily: 'inherit',
   fontSize: '13px',
   headerFontSize: '12px',
-  rowHeight: 48,
+  rowHeight: 56,
   headerHeight: 44,
   wrapperBorderRadius: '0px',
 }
@@ -97,6 +97,7 @@ export default function EmployeeGrid({ rows, onGridReady, onViewChanged }: Props
         pagination
         paginationPageSize={25}
         paginationPageSizeSelector={pageSizes}
+        includeHiddenColumnsInQuickFilter
         cacheQuickFilter
         animateRows={false}
         tooltipShowDelay={300}

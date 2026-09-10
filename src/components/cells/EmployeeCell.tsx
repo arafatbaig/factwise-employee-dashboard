@@ -17,15 +17,18 @@ export default function EmployeeCell({ data }: CustomCellRendererProps<Employee>
   const tone = PALETTE[(data.firstName.charCodeAt(0) + data.lastName.charCodeAt(0)) % PALETTE.length]
 
   return (
-    <div className="flex items-center gap-2.5">
+    <div className="flex h-full items-center gap-3">
       <span
-        className={`grid h-7 w-7 shrink-0 place-items-center rounded-full text-[11px] font-semibold ${tone}`}
+        className={`grid h-8 w-8 shrink-0 place-items-center rounded-full text-[11px] font-semibold ${tone}`}
       >
         {initials}
       </span>
-      <span className="truncate font-medium text-slate-800 dark:text-slate-100">
-        {data.firstName} {data.lastName}
-      </span>
+      <div className="min-w-0 leading-tight">
+        <p className="truncate font-medium text-slate-800 dark:text-slate-100">
+          {data.firstName} {data.lastName}
+        </p>
+        <p className="truncate text-xs text-slate-400 dark:text-slate-500">{data.email}</p>
+      </div>
     </div>
   )
 }

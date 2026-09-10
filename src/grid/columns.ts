@@ -1,6 +1,7 @@
 import type { ColDef, ValueFormatterParams, ValueGetterParams } from 'ag-grid-community'
 import type { Employee } from '../types/employee'
 import EmployeeCell from '../components/cells/EmployeeCell'
+import RoleCell from '../components/cells/RoleCell'
 import RatingCell from '../components/cells/RatingCell'
 import SkillsCell from '../components/cells/SkillsCell'
 import StatusCell from '../components/cells/StatusCell'
@@ -39,13 +40,14 @@ export const columnDefs: ColDef<Employee>[] = [
     cellRenderer: EmployeeCell,
     pinned: 'left',
     lockPinned: true,
-    width: 210,
+    width: 240,
     filter: 'agTextColumnFilter',
   },
   {
     headerName: 'Email',
     field: 'email',
     width: 230,
+    hide: true,
     filter: 'agTextColumnFilter',
     cellClass: 'text-slate-500 dark:text-slate-400',
   },
@@ -53,18 +55,21 @@ export const columnDefs: ColDef<Employee>[] = [
     headerName: 'Department',
     field: 'department',
     width: 140,
+    hide: true,
     filter: 'agTextColumnFilter',
   },
   {
-    headerName: 'Position',
+    headerName: 'Role',
     field: 'position',
-    width: 200,
+    width: 210,
     filter: 'agTextColumnFilter',
+    cellRenderer: RoleCell,
   },
   {
     headerName: 'Manager',
     field: 'manager',
     width: 160,
+    hide: true,
     filter: 'agTextColumnFilter',
     valueFormatter: (p: ValueFormatterParams<Employee, string | null>) => p.value ?? '—',
     cellClass: (p) =>
@@ -84,7 +89,7 @@ export const columnDefs: ColDef<Employee>[] = [
     headerName: 'Hire Date',
     field: 'hireDate',
     colId: 'hireDate',
-    width: 140,
+    width: 125,
     filter: 'agDateColumnFilter',
     valueGetter: (p: ValueGetterParams<Employee>) =>
       p.data?.hireDate ? new Date(`${p.data.hireDate}T00:00:00`) : null,
@@ -95,26 +100,27 @@ export const columnDefs: ColDef<Employee>[] = [
     headerName: 'Age',
     field: 'age',
     width: 100,
+    hide: true,
     filter: 'agNumberColumnFilter',
     cellClass: 'tabular-nums text-slate-600 dark:text-slate-300 text-right',
   },
   {
     headerName: 'Location',
     field: 'location',
-    width: 140,
+    width: 125,
     filter: 'agTextColumnFilter',
   },
   {
     headerName: 'Rating',
     field: 'performanceRating',
-    width: 150,
+    width: 130,
     filter: 'agNumberColumnFilter',
     cellRenderer: RatingCell,
   },
   {
     headerName: 'Projects',
     field: 'projectsCompleted',
-    width: 120,
+    width: 105,
     filter: 'agNumberColumnFilter',
     cellClass: 'tabular-nums text-slate-600 dark:text-slate-300 text-right',
   },
@@ -134,8 +140,8 @@ export const columnDefs: ColDef<Employee>[] = [
   {
     headerName: 'Skills',
     field: 'skills',
-    width: 460,
-    minWidth: 460,
+    width: 240,
+    minWidth: 200,
     flex: 1,
     cellRenderer: SkillsCell,
     cellDataType: false,
