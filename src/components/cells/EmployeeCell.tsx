@@ -27,7 +27,7 @@ export default function EmployeeCell({ data }: CustomCellRendererProps<Employee>
         <p className="truncate font-medium text-slate-800 dark:text-slate-100">
           {data.firstName} {data.lastName}
         </p>
-        <p className="truncate text-xs text-slate-400 dark:text-slate-500">{data.email}</p>
+        <p className="truncate text-xs text-slate-500 dark:text-slate-400">{data.email}</p>
       </div>
     </div>
   )
