@@ -13,10 +13,10 @@ export default function RatingCell({ value }: CustomCellRendererProps<Employee, 
 
   return (
     <div className="flex items-center gap-2">
-      <div className="h-1.5 w-14 overflow-hidden rounded-full bg-slate-200">
+      <div className="h-1.5 w-14 overflow-hidden rounded-full bg-slate-200 dark:bg-slate-700">
         <div className={`h-full rounded-full ${toneFor(value)}`} style={{ width: `${(value / 5) * 100}%` }} />
       </div>
-      <span className="tabular-nums text-slate-600">{value.toFixed(1)}</span>
+      <span className="tabular-nums text-slate-600 dark:text-slate-300">{value.toFixed(1)}</span>
     </div>
   )
 }

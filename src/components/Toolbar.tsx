@@ -52,10 +52,10 @@ export default function Toolbar({
   const hidden = columns.filter((c) => !c.visible).length
 
   return (
-    <div className="flex flex-wrap items-center gap-2 border-b border-slate-200 bg-white px-4 py-3">
+    <div className="flex flex-wrap items-center gap-2 border-b border-slate-200 bg-white px-4 py-3 dark:border-slate-800 dark:bg-slate-900">
       <div className="relative min-w-[220px] flex-1">
         <svg
-          className="pointer-events-none absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-slate-400"
+          className="pointer-events-none absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-slate-400 dark:text-slate-500"
           viewBox="0 0 20 20"
           fill="none"
           stroke="currentColor"
@@ -68,16 +68,16 @@ export default function Toolbar({
           value={search}
           onChange={(e) => onSearchChange(e.target.value)}
           placeholder="Search employees, skills, departments…"
-          className="w-full rounded-lg border border-slate-200 bg-slate-50 py-2 pl-9 pr-3 text-sm text-slate-700 placeholder:text-slate-400 focus:border-indigo-400 focus:bg-white focus:outline-none focus:ring-2 focus:ring-indigo-100"
+          className="w-full rounded-lg border border-slate-200 bg-slate-50 py-2 pl-9 pr-3 text-sm text-slate-700 placeholder:text-slate-400 focus:border-indigo-400 focus:bg-white dark:border-slate-700 dark:bg-slate-800 dark:text-slate-200 dark:placeholder:text-slate-500 dark:focus:bg-slate-800 focus:outline-none focus:ring-2 focus:ring-indigo-100 dark:focus:ring-indigo-500/20"
         />
       </div>
 
-      <label className="flex items-center gap-2 text-sm text-slate-500">
+      <label className="flex items-center gap-2 text-sm text-slate-500 dark:text-slate-400">
         <span className="hidden sm:inline">Rows</span>
         <select
           value={size}
           onChange={(e) => onSizeChange(Number(e.target.value))}
-          className="rounded-lg border border-slate-200 bg-white px-2.5 py-2 text-sm text-slate-700 focus:border-indigo-400 focus:outline-none focus:ring-2 focus:ring-indigo-100"
+          className="rounded-lg border border-slate-200 bg-white px-2.5 py-2 text-sm text-slate-700 dark:border-slate-700 dark:bg-slate-800 dark:text-slate-200 focus:border-indigo-400 focus:outline-none focus:ring-2 focus:ring-indigo-100 dark:focus:ring-indigo-500/20"
         >
           {DATASET_SIZES.map((option) => (
             <option key={option} value={option}>
@@ -91,16 +91,16 @@ export default function Toolbar({
         <button
           type="button"
           onClick={() => setOpen((v) => !v)}
-          className="rounded-lg border border-slate-200 bg-white px-3 py-2 text-sm font-medium text-slate-600 hover:bg-slate-50"
+          className="rounded-lg border border-slate-200 bg-white px-3 py-2 text-sm font-medium text-slate-600 hover:bg-slate-50 dark:border-slate-700 dark:bg-slate-800 dark:text-slate-300 dark:hover:bg-slate-700"
         >
-          Columns{hidden > 0 && <span className="ml-1 text-slate-400">({columns.length - hidden})</span>}
+          Columns{hidden > 0 && <span className="ml-1 text-slate-400 dark:text-slate-500">({columns.length - hidden})</span>}
         </button>
         {open && (
-          <div className="absolute right-0 z-20 mt-1 max-h-80 w-56 overflow-y-auto rounded-lg border border-slate-200 bg-white p-1 shadow-lg">
+          <div className="absolute right-0 z-20 mt-1 max-h-80 w-56 overflow-y-auto rounded-lg border border-slate-200 bg-white p-1 shadow-lg dark:border-slate-700 dark:bg-slate-800">
             {columns.map((column) => (
               <label
                 key={column.colId}
-                className="flex cursor-pointer items-center gap-2.5 rounded-md px-2.5 py-1.5 text-sm text-slate-600 hover:bg-slate-50"
+                className="flex cursor-pointer items-center gap-2.5 rounded-md px-2.5 py-1.5 text-sm text-slate-600 hover:bg-slate-50 dark:text-slate-300 dark:hover:bg-slate-700"
               >
                 <input
                   type="checkbox"
@@ -118,7 +118,7 @@ export default function Toolbar({
       <button
         type="button"
         onClick={onReset}
-        className="rounded-lg border border-slate-200 bg-white px-3 py-2 text-sm font-medium text-slate-600 hover:bg-slate-50"
+        className="rounded-lg border border-slate-200 bg-white px-3 py-2 text-sm font-medium text-slate-600 hover:bg-slate-50 dark:border-slate-700 dark:bg-slate-800 dark:text-slate-300 dark:hover:bg-slate-700"
       >
         Reset
       </button>

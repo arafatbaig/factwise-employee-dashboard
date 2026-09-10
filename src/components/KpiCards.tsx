@@ -19,13 +19,13 @@ interface CardProps {
 
 function Card({ label, value, caption, accent }: CardProps) {
   return (
-    <div className="rounded-xl border border-slate-200 bg-white px-4 py-3.5">
+    <div className="rounded-xl border border-slate-200 bg-white px-4 py-3.5 dark:border-slate-800 dark:bg-slate-900">
       <div className="flex items-center gap-2">
         <span className={`h-2 w-2 rounded-full ${accent}`} />
-        <p className="text-xs font-medium uppercase tracking-wide text-slate-500">{label}</p>
+        <p className="text-xs font-medium uppercase tracking-wide text-slate-500 dark:text-slate-400">{label}</p>
       </div>
-      <p className="mt-2 text-2xl font-semibold tabular-nums tracking-tight text-slate-900">{value}</p>
-      <p className="mt-0.5 text-xs text-slate-400">{caption}</p>
+      <p className="mt-2 text-2xl font-semibold tabular-nums tracking-tight text-slate-900 dark:text-slate-50">{value}</p>
+      <p className="mt-0.5 text-xs text-slate-400 dark:text-slate-500">{caption}</p>
     </div>
   )
 }

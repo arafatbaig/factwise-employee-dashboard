@@ -10,22 +10,50 @@ import { themeQuartz } from 'ag-grid-community'
 import type { Employee } from '../types/employee'
 import { columnDefs, defaultColDef } from '../grid/columns'
 
-const theme = themeQuartz.withParams({
-  accentColor: '#4f46e5',
-  borderColor: '#e2e8f0',
-  headerBackgroundColor: '#f8fafc',
-  headerTextColor: '#475569',
+const shared = {
   headerFontWeight: 600,
   fontFamily: 'inherit',
   fontSize: '13px',
   headerFontSize: '12px',
   rowHeight: 48,
   headerHeight: 44,
-  oddRowBackgroundColor: '#ffffff',
-  rowHoverColor: '#f8fafc',
-  selectedRowBackgroundColor: '#eef2ff',
   wrapperBorderRadius: '0px',
-})
+}
+
+const theme = themeQuartz
+  .withParams(
+    {
+      ...shared,
+      accentColor: '#4f46e5',
+      backgroundColor: '#ffffff',
+      foregroundColor: '#0f172a',
+      borderColor: '#e2e8f0',
+      headerBackgroundColor: '#f8fafc',
+      headerTextColor: '#475569',
+      oddRowBackgroundColor: '#ffffff',
+      rowHoverColor: '#f8fafc',
+      selectedRowBackgroundColor: '#eef2ff',
+    },
+    'light',
+  )
+  .withParams(
+    {
+      ...shared,
+      accentColor: '#818cf8',
+      backgroundColor: '#0f172a',
+      foregroundColor: '#e2e8f0',
+      borderColor: '#1e293b',
+      headerBackgroundColor: '#111c33',
+      headerTextColor: '#94a3b8',
+      oddRowBackgroundColor: '#0f172a',
+      rowHoverColor: '#16233d',
+      selectedRowBackgroundColor: '#1e2a4a',
+      inputBackgroundColor: '#0f172a',
+      menuBackgroundColor: '#111c33',
+      menuTextColor: '#e2e8f0',
+    },
+    'dark',
+  )
 
 const rowSelection: RowSelectionOptions<Employee> = {
   mode: 'multiRow',

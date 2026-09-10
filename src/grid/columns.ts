@@ -47,7 +47,7 @@ export const columnDefs: ColDef<Employee>[] = [
     field: 'email',
     width: 230,
     filter: 'agTextColumnFilter',
-    cellClass: 'text-slate-500',
+    cellClass: 'text-slate-500 dark:text-slate-400',
   },
   {
     headerName: 'Department',
@@ -67,7 +67,8 @@ export const columnDefs: ColDef<Employee>[] = [
     width: 160,
     filter: 'agTextColumnFilter',
     valueFormatter: (p: ValueFormatterParams<Employee, string | null>) => p.value ?? '—',
-    cellClass: (p) => (p.value ? 'text-slate-600' : 'text-slate-400'),
+    cellClass: (p) =>
+      p.value ? 'text-slate-600 dark:text-slate-300' : 'text-slate-400 dark:text-slate-500',
     tooltipValueGetter: (p) => (p.value ? null : 'Department head — reports to no one'),
   },
   {
@@ -77,7 +78,7 @@ export const columnDefs: ColDef<Employee>[] = [
     filter: 'agNumberColumnFilter',
     valueFormatter: (p: ValueFormatterParams<Employee, number>) =>
       p.value == null ? '' : currency.format(p.value),
-    cellClass: 'tabular-nums font-medium text-slate-700 text-right',
+    cellClass: 'tabular-nums font-medium text-slate-700 dark:text-slate-200 text-right',
   },
   {
     headerName: 'Hire Date',
@@ -95,7 +96,7 @@ export const columnDefs: ColDef<Employee>[] = [
     field: 'age',
     width: 100,
     filter: 'agNumberColumnFilter',
-    cellClass: 'tabular-nums text-slate-600 text-right',
+    cellClass: 'tabular-nums text-slate-600 dark:text-slate-300 text-right',
   },
   {
     headerName: 'Location',
@@ -115,7 +116,7 @@ export const columnDefs: ColDef<Employee>[] = [
     field: 'projectsCompleted',
     width: 120,
     filter: 'agNumberColumnFilter',
-    cellClass: 'tabular-nums text-slate-600 text-right',
+    cellClass: 'tabular-nums text-slate-600 dark:text-slate-300 text-right',
   },
   {
     headerName: 'Status',
