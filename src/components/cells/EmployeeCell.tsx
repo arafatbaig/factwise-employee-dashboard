@@ -25,7 +25,8 @@ export default function EmployeeCell({ data }: CustomCellRendererProps<Employee>
   const initials = `${data.firstName[0]}${data.lastName[0]}`
   const tone = PALETTE[(data.firstName.charCodeAt(0) + data.lastName.charCodeAt(0)) % PALETTE.length]
 
-  const copyEmail = async () => {
+  const copyEmail = async (event: React.MouseEvent) => {
+    event.stopPropagation()
     try {
       await navigator.clipboard.writeText(data.email)
       setCopied(true)
@@ -48,6 +49,7 @@ export default function EmployeeCell({ data }: CustomCellRendererProps<Employee>
         <div className="flex items-center gap-1">
           <a
             href={`mailto:${data.email}`}
+            onClick={(e) => e.stopPropagation()}
             title={data.email}
             className="truncate text-xs text-slate-500 hover:text-indigo-600 hover:underline dark:text-slate-400 dark:hover:text-indigo-400"
           >

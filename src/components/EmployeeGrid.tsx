@@ -3,6 +3,7 @@ import { AgGridReact } from 'ag-grid-react'
 import type {
   GetRowIdParams,
   GridReadyEvent,
+  RowClickedEvent,
   RowSelectionOptions,
   ColDef,
 } from 'ag-grid-community'
@@ -79,10 +80,20 @@ interface Props {
   rows: Employee[]
   onGridReady: (event: GridReadyEvent<Employee>) => void
   onViewChanged: () => void
+  onRowClicked: (employee: Employee) => void
 }
 
-export default function EmployeeGrid({ rows, onGridReady, onViewChanged }: Props) {
+export default function EmployeeGrid({ rows, onGridReady, onViewChanged, onRowClicked }: Props) {
   const getRowId = useCallback((params: GetRowIdParams<Employee>) => String(params.data.id), [])
+
+  const handleRowClicked = useCallback(
+    (event: RowClickedEvent<Employee>) => {
+      const target = event.event?.target as HTMLElement | undefined
+      if (target?.closest('button, a, input')) return
+      if (event.data) onRowClicked(event.data)
+    },
+    [onRowClicked],
+  )
 
   return (
     <div className="h-full w-full">
@@ -104,6 +115,7 @@ export default function EmployeeGrid({ rows, onGridReady, onViewChanged }: Props
         tooltipShowDelay={300}
         localeText={localeText}
         onGridReady={onGridReady}
+        onRowClicked={handleRowClicked}
         onFilterChanged={onViewChanged}
         onRowDataUpdated={onViewChanged}
       />
