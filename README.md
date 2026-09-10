@@ -2,7 +2,7 @@
 
 A client-side dashboard built with AG Grid and React for the FactWise frontend assignment.
 
-Live demo: _add link after deploying_
+Live demo: https://factwise-employee-dashboard-mu.vercel.app/
 
 ## Running it
 
