@@ -40,7 +40,8 @@ export const columnDefs: ColDef<Employee>[] = [
     cellRenderer: EmployeeCell,
     pinned: 'left',
     lockPinned: true,
-    width: 240,
+    width: 292,
+    minWidth: 292,
     filter: 'agTextColumnFilter',
   },
   {
@@ -79,7 +80,7 @@ export const columnDefs: ColDef<Employee>[] = [
   {
     headerName: 'Salary',
     field: 'salary',
-    width: 130,
+    width: 118,
     filter: 'agNumberColumnFilter',
     valueFormatter: (p: ValueFormatterParams<Employee, number>) =>
       p.value == null ? '' : currency.format(p.value),
@@ -89,7 +90,7 @@ export const columnDefs: ColDef<Employee>[] = [
     headerName: 'Hire Date',
     field: 'hireDate',
     colId: 'hireDate',
-    width: 125,
+    width: 118,
     filter: 'agDateColumnFilter',
     valueGetter: (p: ValueGetterParams<Employee>) =>
       p.data?.hireDate ? new Date(`${p.data.hireDate}T00:00:00`) : null,
@@ -107,27 +108,27 @@ export const columnDefs: ColDef<Employee>[] = [
   {
     headerName: 'Location',
     field: 'location',
-    width: 125,
+    width: 112,
     filter: 'agTextColumnFilter',
   },
   {
     headerName: 'Rating',
     field: 'performanceRating',
-    width: 130,
+    width: 116,
     filter: 'agNumberColumnFilter',
     cellRenderer: RatingCell,
   },
   {
     headerName: 'Projects',
     field: 'projectsCompleted',
-    width: 105,
+    width: 96,
     filter: 'agNumberColumnFilter',
     cellClass: 'tabular-nums text-slate-600 dark:text-slate-300 text-right',
   },
   {
     headerName: 'Status',
     field: 'isActive',
-    width: 130,
+    width: 118,
     filter: 'agTextColumnFilter',
     cellRenderer: StatusCell,
     valueGetter: (p: ValueGetterParams<Employee>) =>
