@@ -37,7 +37,7 @@ export default function EmployeeCell({ data }: CustomCellRendererProps<Employee>
   return (
     <div className="group flex h-full items-center gap-3">
       <span
-        className={`grid h-8 w-8 shrink-0 place-items-center rounded-full text-[11px] font-semibold ${tone}`}
+        className={`grid h-8 w-8 shrink-0 place-items-center rounded-full text-[11px] font-semibold leading-none ${tone}`}
       >
         {initials}
       </span>

@@ -41,3 +41,8 @@
 ::-webkit-scrollbar-corner {
   background: transparent;
 }
+
+.ag-cell .ag-cell-wrapper {
+  height: 100%;
+  line-height: normal;
+}
