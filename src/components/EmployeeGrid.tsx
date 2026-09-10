@@ -68,7 +68,7 @@ const selectionColumnDef: ColDef<Employee> = {
   lockPosition: true,
 }
 
-const pageSizes = [25, 50, 100]
+const pageSizes = [10, 25, 50, 100]
 
 const localeText = {
   noRowsToShow: 'No employees to show',
@@ -95,7 +95,7 @@ export default function EmployeeGrid({ rows, onGridReady, onViewChanged }: Props
         rowSelection={rowSelection}
         selectionColumnDef={selectionColumnDef}
         pagination
-        paginationPageSize={25}
+        paginationPageSize={10}
         paginationPageSizeSelector={pageSizes}
         enableCellTextSelection
         includeHiddenColumnsInQuickFilter
