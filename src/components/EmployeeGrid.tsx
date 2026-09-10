@@ -97,6 +97,7 @@ export default function EmployeeGrid({ rows, onGridReady, onViewChanged }: Props
         pagination
         paginationPageSize={25}
         paginationPageSizeSelector={pageSizes}
+        enableCellTextSelection
         includeHiddenColumnsInQuickFilter
         cacheQuickFilter
         animateRows={false}
