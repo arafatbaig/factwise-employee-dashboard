@@ -17,6 +17,10 @@ const dateFormat = new Intl.DateTimeFormat('en-US', {
   year: 'numeric',
 })
 
+function skillsText(skills: string[] | undefined) {
+  return skills?.join(', ') ?? ''
+}
+
 export const defaultColDef: ColDef<Employee> = {
   sortable: true,
   filter: true,
@@ -73,8 +77,7 @@ export const columnDefs: ColDef<Employee>[] = [
     filter: 'agNumberColumnFilter',
     valueFormatter: (p: ValueFormatterParams<Employee, number>) =>
       p.value == null ? '' : currency.format(p.value),
-    type: 'rightAligned',
-    cellClass: 'tabular-nums font-medium text-slate-700',
+    cellClass: 'tabular-nums font-medium text-slate-700 text-right',
   },
   {
     headerName: 'Hire Date',
@@ -92,8 +95,7 @@ export const columnDefs: ColDef<Employee>[] = [
     field: 'age',
     width: 100,
     filter: 'agNumberColumnFilter',
-    type: 'rightAligned',
-    cellClass: 'tabular-nums text-slate-600',
+    cellClass: 'tabular-nums text-slate-600 text-right',
   },
   {
     headerName: 'Location',
@@ -113,8 +115,7 @@ export const columnDefs: ColDef<Employee>[] = [
     field: 'projectsCompleted',
     width: 120,
     filter: 'agNumberColumnFilter',
-    type: 'rightAligned',
-    cellClass: 'tabular-nums text-slate-600',
+    cellClass: 'tabular-nums text-slate-600 text-right',
   },
   {
     headerName: 'Status',
@@ -124,7 +125,9 @@ export const columnDefs: ColDef<Employee>[] = [
     cellRenderer: StatusCell,
     valueGetter: (p: ValueGetterParams<Employee>) =>
       p.data?.isActive === undefined ? null : p.data.isActive,
-    getQuickFilterText: (p) => (p.value ? 'Active' : 'Inactive'),
+    valueFormatter: (p: ValueFormatterParams<Employee, boolean>) =>
+      p.value === null ? '' : p.value ? 'Active' : 'Inactive',
+    getQuickFilterText: (p) => (p.data?.isActive ? 'Active' : 'Inactive'),
     filterValueGetter: (p) => (p.data?.isActive ? 'Active' : 'Inactive'),
   },
   {
@@ -133,11 +136,11 @@ export const columnDefs: ColDef<Employee>[] = [
     width: 320,
     cellRenderer: SkillsCell,
     cellDataType: false,
-    valueFormatter: (p: ValueFormatterParams<Employee, string[]>) => p.value?.join(', ') ?? '',
+    valueFormatter: (p: ValueFormatterParams<Employee, string[]>) => skillsText(p.value),
     filter: 'agTextColumnFilter',
-    filterValueGetter: (p) => p.data?.skills.join(', ') ?? '',
-    getQuickFilterText: (p) => (p.value as string[] | undefined)?.join(' ') ?? '',
-    comparator: (a: string[] = [], b: string[] = []) => a.join(', ').localeCompare(b.join(', ')),
-    tooltipValueGetter: (p) => (p.value as string[] | undefined)?.join(', ') ?? '',
+    filterValueGetter: (p) => skillsText(p.data?.skills),
+    getQuickFilterText: (p) => skillsText(p.data?.skills),
+    comparator: (a: string[] = [], b: string[] = []) => skillsText(a).localeCompare(skillsText(b)),
+    tooltipValueGetter: (p) => skillsText(p.data?.skills),
   },
 ]
