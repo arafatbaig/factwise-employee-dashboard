@@ -1,6 +1,14 @@
 import type { GridApi } from 'ag-grid-community'
 import type { Employee } from '../types/employee'
-import { emptyStats, type Stats } from '../components/KpiCards'
+
+export interface Stats {
+  headcount: number
+  avgSalary: number
+  projects: number
+  active: number
+}
+
+export const emptyStats: Stats = { headcount: 0, avgSalary: 0, projects: 0, active: 0 }
 
 export function readStats(api: GridApi<Employee>): Stats {
   let headcount = 0

@@ -1,11 +1,4 @@
-export interface Stats {
-  headcount: number
-  avgSalary: number
-  projects: number
-  active: number
-}
-
-export const emptyStats: Stats = { headcount: 0, avgSalary: 0, projects: 0, active: 0 }
+import type { Stats } from '../grid/stats'
 
 const currency = new Intl.NumberFormat('en-US', {
   style: 'currency',

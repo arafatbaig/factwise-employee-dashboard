@@ -1,6 +1,11 @@
-import { useCallback, useMemo } from 'react'
+import { useCallback } from 'react'
 import { AgGridReact } from 'ag-grid-react'
-import type { GetRowIdParams, GridOptions, GridReadyEvent } from 'ag-grid-community'
+import type {
+  GetRowIdParams,
+  GridReadyEvent,
+  RowSelectionOptions,
+  ColDef,
+} from 'ag-grid-community'
 import { themeQuartz } from 'ag-grid-community'
 import type { Employee } from '../types/employee'
 import { columnDefs, defaultColDef } from '../grid/columns'
@@ -22,15 +27,24 @@ const theme = themeQuartz.withParams({
   wrapperBorderRadius: '0px',
 })
 
-const gridOptions: GridOptions<Employee> = {
-  rowSelection: { mode: 'multiRow', headerCheckbox: true, enableClickSelection: false },
-  selectionColumnDef: { pinned: 'left', width: 44, resizable: false, lockPosition: true },
-  pagination: true,
-  paginationPageSize: 25,
-  paginationPageSizeSelector: [25, 50, 100],
-  suppressColumnVirtualisation: false,
-  animateRows: false,
-  tooltipShowDelay: 300,
+const rowSelection: RowSelectionOptions<Employee> = {
+  mode: 'multiRow',
+  headerCheckbox: true,
+  enableClickSelection: false,
+}
+
+const selectionColumnDef: ColDef<Employee> = {
+  pinned: 'left',
+  width: 44,
+  resizable: false,
+  lockPosition: true,
+}
+
+const pageSizes = [25, 50, 100]
+
+const localeText = {
+  noRowsToShow: 'No employees to show',
+  noMatchingRows: 'No employees match the current filters',
 }
 
 interface Props {
@@ -42,8 +56,6 @@ interface Props {
 export default function EmployeeGrid({ rows, onGridReady, onViewChanged }: Props) {
   const getRowId = useCallback((params: GetRowIdParams<Employee>) => String(params.data.id), [])
 
-  const options = useMemo(() => gridOptions, [])
-
   return (
     <div className="h-full w-full">
       <AgGridReact<Employee>
@@ -51,8 +63,16 @@ export default function EmployeeGrid({ rows, onGridReady, onViewChanged }: Props
         rowData={rows}
         columnDefs={columnDefs}
         defaultColDef={defaultColDef}
-        gridOptions={options}
         getRowId={getRowId}
+        rowSelection={rowSelection}
+        selectionColumnDef={selectionColumnDef}
+        pagination
+        paginationPageSize={25}
+        paginationPageSizeSelector={pageSizes}
+        cacheQuickFilter
+        animateRows={false}
+        tooltipShowDelay={300}
+        localeText={localeText}
         onGridReady={onGridReady}
         onFilterChanged={onViewChanged}
         onRowDataUpdated={onViewChanged}

@@ -1,24 +1,20 @@
-import { useCallback, useMemo, useRef, useState } from 'react'
+import { useCallback, useEffect, useRef, useState } from 'react'
 import type { GridApi, GridReadyEvent } from 'ag-grid-community'
 import EmployeeGrid from './components/EmployeeGrid'
-import KpiCards, { emptyStats, type Stats } from './components/KpiCards'
+import KpiCards from './components/KpiCards'
 import Toolbar, { type ColumnToggle } from './components/Toolbar'
-import { buildDataset } from './data/employees'
-import { readStats } from './grid/stats'
+import { buildDataset, seedEmployees } from './data/employees'
+import { emptyStats, readStats, type Stats } from './grid/stats'
 import type { Employee } from './types/employee'
 
 export default function App() {
   const apiRef = useRef<GridApi<Employee> | null>(null)
-  const [size, setSize] = useState(20)
+  const [size, setSize] = useState(seedEmployees.length)
+  const [rows, setRows] = useState<Employee[]>(seedEmployees)
+  const [buildMs, setBuildMs] = useState(0)
   const [search, setSearch] = useState('')
   const [columns, setColumns] = useState<ColumnToggle[]>([])
   const [stats, setStats] = useState<Stats>(emptyStats)
-
-  const { rows, buildMs } = useMemo(() => {
-    const start = performance.now()
-    const data = buildDataset(size)
-    return { rows: data, buildMs: performance.now() - start }
-  }, [size])
 
   const refreshStats = useCallback(() => {
     const api = apiRef.current
@@ -47,10 +43,25 @@ export default function App() {
     [readColumns],
   )
 
+  const handleSizeChange = useCallback((next: number) => {
+    const start = performance.now()
+    const data = buildDataset(next)
+    setBuildMs(performance.now() - start)
+    setSize(next)
+    setRows(data)
+  }, [])
+
+  const searchTimer = useRef<number>(0)
+
   const handleSearchChange = useCallback((value: string) => {
     setSearch(value)
-    apiRef.current?.setGridOption('quickFilterText', value)
+    window.clearTimeout(searchTimer.current)
+    searchTimer.current = window.setTimeout(() => {
+      apiRef.current?.setGridOption('quickFilterText', value)
+    }, 180)
   }, [])
+
+  useEffect(() => () => window.clearTimeout(searchTimer.current), [])
 
   const handleToggleColumn = useCallback(
     (colId: string, visible: boolean) => {
@@ -73,6 +84,7 @@ export default function App() {
     const api = apiRef.current
     if (!api) return
     setSearch('')
+    window.clearTimeout(searchTimer.current)
     api.setGridOption('quickFilterText', '')
     api.setFilterModel(null)
     api.resetColumnState()
@@ -100,7 +112,7 @@ export default function App() {
             search={search}
             onSearchChange={handleSearchChange}
             size={size}
-            onSizeChange={setSize}
+            onSizeChange={handleSizeChange}
             columns={columns}
             onToggleColumn={handleToggleColumn}
             onExport={handleExport}
