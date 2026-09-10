@@ -13,7 +13,7 @@ export default function App() {
   const apiRef = useRef<GridApi<Employee> | null>(null)
   const [size, setSize] = useState(seedEmployees.length)
   const [rows, setRows] = useState<Employee[]>(seedEmployees)
-  const [buildMs, setBuildMs] = useState(0)
+  const [buildMs, setBuildMs] = useState<number | null>(null)
   const [search, setSearch] = useState('')
   const [columns, setColumns] = useState<ColumnToggle[]>([])
   const [stats, setStats] = useState<Stats>(emptyStats)
@@ -49,7 +49,8 @@ export default function App() {
   const handleSizeChange = useCallback((next: number) => {
     const start = performance.now()
     const data = buildDataset(next)
-    setBuildMs(performance.now() - start)
+    const elapsed = performance.now() - start
+    setBuildMs(next > seedEmployees.length ? elapsed : null)
     setSize(next)
     setRows(data)
   }, [])
@@ -112,7 +113,8 @@ export default function App() {
         </div>
         <div className="flex items-center gap-3">
           <p className="hidden text-xs text-slate-400 sm:block dark:text-slate-500">
-            {rows.length.toLocaleString()} rows built in {buildMs.toFixed(1)}ms
+            {rows.length.toLocaleString()} rows
+            {buildMs !== null ? ` · generated in ${buildMs.toFixed(0)}ms` : ''}
           </p>
           <ModeToggle mode={mode} onToggle={toggleMode} />
         </div>
