@@ -106,7 +106,7 @@ export default function App() {
 
   return (
     <div className="flex h-screen flex-col bg-slate-50 text-slate-900 dark:bg-slate-950 dark:text-slate-100">
-      <header className="flex items-center justify-between gap-4 border-b border-slate-200 bg-white px-6 py-4 dark:border-slate-800 dark:bg-slate-900">
+      <header className="flex items-center justify-between gap-4 border-b border-slate-200 bg-white px-4 py-4 lg:px-6 dark:border-slate-800 dark:bg-slate-900">
         <div>
           <h1 className="text-lg font-semibold tracking-tight">Employee Dashboard</h1>
           <p className="text-sm text-slate-500 dark:text-slate-400">Workforce overview</p>
@@ -120,7 +120,7 @@ export default function App() {
         </div>
       </header>
 
-      <main className="flex min-h-0 flex-1 flex-col gap-4 p-6">
+      <main className="flex min-h-0 flex-1 flex-col gap-4 p-4 lg:p-6">
         <KpiCards stats={stats} total={rows.length} />
 
         <div className="flex min-h-0 flex-1 flex-col overflow-hidden rounded-xl border border-slate-200 bg-white dark:border-slate-800 dark:bg-slate-900">

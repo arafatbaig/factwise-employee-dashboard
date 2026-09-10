@@ -13,11 +13,13 @@ export default function RoleCell({ data }: CustomCellRendererProps<Employee>) {
   if (!data) return null
 
   return (
-    <div className="flex h-full flex-col justify-center gap-0.5 leading-tight">
+    <div className="flex h-full min-w-0 flex-col justify-center gap-0.5 leading-tight">
       <p className="truncate text-slate-800 dark:text-slate-100">{data.position}</p>
-      <p className="flex items-center gap-1.5 truncate text-xs text-slate-500 dark:text-slate-400">
+      <p className="flex min-w-0 items-center gap-1.5 text-xs text-slate-500 dark:text-slate-400">
         <span className={`h-1.5 w-1.5 shrink-0 rounded-full ${DOT[data.department] ?? 'bg-slate-400'}`} />
-        {data.department}
+        <span className="truncate">
+          {data.department} · {data.location}
+        </span>
       </p>
     </div>
   )
