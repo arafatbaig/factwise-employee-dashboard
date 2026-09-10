@@ -17,7 +17,7 @@ const dateFormat = new Intl.DateTimeFormat('en-US', {
   year: 'numeric',
 })
 
-function skillsText(skills: string[] | undefined) {
+function skillsText(skills: string[] | null | undefined) {
   return skills?.join(', ') ?? ''
 }
 
