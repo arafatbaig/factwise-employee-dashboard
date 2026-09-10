@@ -1,8 +1,10 @@
 import { useCallback, useMemo, useRef, useState } from 'react'
 import type { GridApi, GridReadyEvent } from 'ag-grid-community'
 import EmployeeGrid from './components/EmployeeGrid'
+import KpiCards, { emptyStats, type Stats } from './components/KpiCards'
 import Toolbar, { type ColumnToggle } from './components/Toolbar'
 import { buildDataset } from './data/employees'
+import { readStats } from './grid/stats'
 import type { Employee } from './types/employee'
 
 export default function App() {
@@ -10,12 +12,18 @@ export default function App() {
   const [size, setSize] = useState(20)
   const [search, setSearch] = useState('')
   const [columns, setColumns] = useState<ColumnToggle[]>([])
+  const [stats, setStats] = useState<Stats>(emptyStats)
 
   const { rows, buildMs } = useMemo(() => {
     const start = performance.now()
     const data = buildDataset(size)
     return { rows: data, buildMs: performance.now() - start }
   }, [size])
+
+  const refreshStats = useCallback(() => {
+    const api = apiRef.current
+    if (api && !api.isDestroyed()) setStats(readStats(api))
+  }, [])
 
   const readColumns = useCallback((api: GridApi<Employee>) => {
     setColumns(
@@ -34,6 +42,7 @@ export default function App() {
     (event: GridReadyEvent<Employee>) => {
       apiRef.current = event.api
       readColumns(event.api)
+      setStats(readStats(event.api))
     },
     [readColumns],
   )
@@ -83,7 +92,9 @@ export default function App() {
         </p>
       </header>
 
-      <main className="flex min-h-0 flex-1 flex-col p-6">
+      <main className="flex min-h-0 flex-1 flex-col gap-4 p-6">
+        <KpiCards stats={stats} total={rows.length} />
+
         <div className="flex min-h-0 flex-1 flex-col overflow-hidden rounded-xl border border-slate-200 bg-white">
           <Toolbar
             search={search}
@@ -96,7 +107,7 @@ export default function App() {
             onReset={handleReset}
           />
           <div className="min-h-0 flex-1">
-            <EmployeeGrid rows={rows} onGridReady={handleGridReady} onViewChanged={() => {}} />
+            <EmployeeGrid rows={rows} onGridReady={handleGridReady} onViewChanged={refreshStats} />
           </div>
         </div>
       </main>
