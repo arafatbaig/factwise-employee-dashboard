@@ -134,7 +134,9 @@ export const columnDefs: ColDef<Employee>[] = [
   {
     headerName: 'Skills',
     field: 'skills',
-    width: 320,
+    width: 460,
+    minWidth: 460,
+    flex: 1,
     cellRenderer: SkillsCell,
     cellDataType: false,
     valueFormatter: (p: ValueFormatterParams<Employee, string[]>) => skillsText(p.value),

@@ -5,7 +5,7 @@ export default function SkillsCell({ value }: CustomCellRendererProps<Employee, 
   if (!value?.length) return null
 
   return (
-    <div className="flex items-center gap-1.5 overflow-hidden">
+    <div className="flex h-full items-center gap-1.5 overflow-hidden">
       {value.map((skill) => (
         <span
           key={skill}
