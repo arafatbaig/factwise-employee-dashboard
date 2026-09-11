@@ -3,7 +3,6 @@ import { AgGridReact } from 'ag-grid-react'
 import type {
   GetRowIdParams,
   GridReadyEvent,
-  RowClickedEvent,
   RowSelectionOptions,
   ColDef,
 } from 'ag-grid-community'
@@ -16,7 +15,7 @@ const shared = {
   fontFamily: 'inherit',
   fontSize: '13px',
   headerFontSize: '12px',
-  rowHeight: 56,
+  rowHeight: 46,
   headerHeight: 44,
   wrapperBorderRadius: '0px',
 }
@@ -80,20 +79,11 @@ interface Props {
   rows: Employee[]
   onGridReady: (event: GridReadyEvent<Employee>) => void
   onViewChanged: () => void
-  onRowClicked: (employee: Employee) => void
 }
 
-export default function EmployeeGrid({ rows, onGridReady, onViewChanged, onRowClicked }: Props) {
+export default function EmployeeGrid({ rows, onGridReady, onViewChanged }: Props) {
   const getRowId = useCallback((params: GetRowIdParams<Employee>) => String(params.data.id), [])
 
-  const handleRowClicked = useCallback(
-    (event: RowClickedEvent<Employee>) => {
-      const target = event.event?.target as HTMLElement | undefined
-      if (target?.closest('button, a, input')) return
-      if (event.data) onRowClicked(event.data)
-    },
-    [onRowClicked],
-  )
 
   return (
     <div className="h-full w-full">
@@ -115,7 +105,6 @@ export default function EmployeeGrid({ rows, onGridReady, onViewChanged, onRowCl
         tooltipShowDelay={300}
         localeText={localeText}
         onGridReady={onGridReady}
-        onRowClicked={handleRowClicked}
         onFilterChanged={onViewChanged}
         onRowDataUpdated={onViewChanged}
       />

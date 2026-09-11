@@ -1,7 +1,8 @@
 import type { ColDef, ValueFormatterParams, ValueGetterParams } from 'ag-grid-community'
 import type { Employee } from '../types/employee'
+import DepartmentCell from '../components/cells/DepartmentCell'
+import EmailCell from '../components/cells/EmailCell'
 import EmployeeCell from '../components/cells/EmployeeCell'
-import RoleCell from '../components/cells/RoleCell'
 import RatingCell from '../components/cells/RatingCell'
 import SkillsCell from '../components/cells/SkillsCell'
 import StatusCell from '../components/cells/StatusCell'
@@ -26,7 +27,7 @@ export const defaultColDef: ColDef<Employee> = {
   sortable: true,
   filter: true,
   resizable: true,
-  minWidth: 110,
+  minWidth: 90,
   filterParams: { buttons: ['reset'] },
 }
 
@@ -40,37 +41,37 @@ export const columnDefs: ColDef<Employee>[] = [
     cellRenderer: EmployeeCell,
     pinned: 'left',
     lockPinned: true,
-    width: 292,
-    minWidth: 292,
+    width: 210,
+    minWidth: 210,
     filter: 'agTextColumnFilter',
   },
   {
     headerName: 'Email',
     field: 'email',
-    width: 230,
-    hide: true,
+    width: 250,
+    minWidth: 250,
     filter: 'agTextColumnFilter',
-    cellClass: 'text-slate-500 dark:text-slate-400',
+    cellRenderer: EmailCell,
   },
   {
     headerName: 'Department',
     field: 'department',
-    width: 140,
-    hide: true,
+    width: 145,
     filter: 'agTextColumnFilter',
+    cellRenderer: DepartmentCell,
   },
   {
-    headerName: 'Role',
+    headerName: 'Position',
     field: 'position',
-    width: 208,
+    width: 195,
+    minWidth: 195,
     filter: 'agTextColumnFilter',
-    cellRenderer: RoleCell,
+    cellClass: 'text-slate-700 dark:text-slate-200',
   },
   {
     headerName: 'Manager',
     field: 'manager',
     width: 160,
-    hide: true,
     filter: 'agTextColumnFilter',
     valueFormatter: (p: ValueFormatterParams<Employee, string | null>) => p.value ?? '—',
     cellClass: (p) =>
@@ -80,7 +81,7 @@ export const columnDefs: ColDef<Employee>[] = [
   {
     headerName: 'Salary',
     field: 'salary',
-    width: 110,
+    width: 118,
     filter: 'agNumberColumnFilter',
     valueFormatter: (p: ValueFormatterParams<Employee, number>) =>
       p.value == null ? '' : currency.format(p.value),
@@ -90,18 +91,18 @@ export const columnDefs: ColDef<Employee>[] = [
     headerName: 'Hire Date',
     field: 'hireDate',
     colId: 'hireDate',
-    width: 112,
+    width: 125,
     filter: 'agDateColumnFilter',
     valueGetter: (p: ValueGetterParams<Employee>) =>
       p.data?.hireDate ? new Date(`${p.data.hireDate}T00:00:00`) : null,
     valueFormatter: (p: ValueFormatterParams<Employee, Date>) =>
       p.value ? dateFormat.format(p.value) : '',
+    cellClass: 'text-slate-600 dark:text-slate-300',
   },
   {
     headerName: 'Age',
     field: 'age',
-    width: 100,
-    hide: true,
+    width: 92,
     filter: 'agNumberColumnFilter',
     cellClass: 'tabular-nums text-slate-600 dark:text-slate-300 text-right',
   },
@@ -109,27 +110,27 @@ export const columnDefs: ColDef<Employee>[] = [
     headerName: 'Location',
     field: 'location',
     width: 130,
-    hide: true,
     filter: 'agTextColumnFilter',
+    cellClass: 'text-slate-600 dark:text-slate-300',
   },
   {
     headerName: 'Rating',
     field: 'performanceRating',
-    width: 108,
+    width: 128,
     filter: 'agNumberColumnFilter',
     cellRenderer: RatingCell,
   },
   {
     headerName: 'Projects',
     field: 'projectsCompleted',
-    width: 88,
+    width: 105,
     filter: 'agNumberColumnFilter',
     cellClass: 'tabular-nums text-slate-600 dark:text-slate-300 text-right',
   },
   {
     headerName: 'Status',
     field: 'isActive',
-    width: 110,
+    width: 118,
     filter: 'agTextColumnFilter',
     cellRenderer: StatusCell,
     valueGetter: (p: ValueGetterParams<Employee>) =>
@@ -142,8 +143,8 @@ export const columnDefs: ColDef<Employee>[] = [
   {
     headerName: 'Skills',
     field: 'skills',
-    width: 200,
-    minWidth: 180,
+    width: 450,
+    minWidth: 450,
     flex: 1,
     cellRenderer: SkillsCell,
     cellDataType: false,

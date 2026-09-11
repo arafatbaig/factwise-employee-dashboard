@@ -1,6 +1,5 @@
 import { useCallback, useEffect, useRef, useState } from 'react'
 import type { GridApi, GridReadyEvent } from 'ag-grid-community'
-import EmployeeDetail from './components/EmployeeDetail'
 import EmployeeGrid from './components/EmployeeGrid'
 import KpiCards from './components/KpiCards'
 import ModeToggle from './components/ModeToggle'
@@ -19,7 +18,6 @@ export default function App() {
   const [columns, setColumns] = useState<ColumnToggle[]>([])
   const [stats, setStats] = useState<Stats>(emptyStats)
   const [mode, setMode] = useState<ColorMode>(readStoredMode)
-  const [selected, setSelected] = useState<Employee | null>(null)
 
   const refreshStats = useCallback(() => {
     const api = apiRef.current
@@ -137,17 +135,10 @@ export default function App() {
             onReset={handleReset}
           />
           <div className="min-h-0 flex-1">
-            <EmployeeGrid
-              rows={rows}
-              onGridReady={handleGridReady}
-              onViewChanged={refreshStats}
-              onRowClicked={setSelected}
-            />
+            <EmployeeGrid rows={rows} onGridReady={handleGridReady} onViewChanged={refreshStats} />
           </div>
         </div>
       </main>
-
-      <EmployeeDetail employee={selected} onClose={() => setSelected(null)} />
     </div>
   )
 }
