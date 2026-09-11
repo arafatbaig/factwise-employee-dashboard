@@ -9,7 +9,7 @@ export function readStoredMode(): ColorMode {
   } catch {
     // storage can be unavailable in private windows
   }
-  return window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light'
+  return 'light'
 }
 
 export function applyMode(mode: ColorMode) {

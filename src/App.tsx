@@ -112,10 +112,11 @@ export default function App() {
           <p className="text-sm text-slate-500 dark:text-slate-400">Workforce overview</p>
         </div>
         <div className="flex items-center gap-3">
-          <p className="hidden text-xs text-slate-400 sm:block dark:text-slate-500">
-            {rows.length.toLocaleString()} rows
-            {buildMs !== null ? ` · generated in ${buildMs.toFixed(0)}ms` : ''}
-          </p>
+          {buildMs !== null && (
+            <p className="hidden text-xs text-slate-400 sm:block dark:text-slate-500">
+              {rows.length.toLocaleString()} rows generated in {buildMs.toFixed(0)}ms
+            </p>
+          )}
           <ModeToggle mode={mode} onToggle={toggleMode} />
         </div>
       </header>
