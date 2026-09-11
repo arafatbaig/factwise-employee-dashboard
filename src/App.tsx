@@ -18,6 +18,8 @@ export default function App() {
   const [columns, setColumns] = useState<ColumnToggle[]>([])
   const [stats, setStats] = useState<Stats>(emptyStats)
   const [mode, setMode] = useState<ColorMode>(readStoredMode)
+  const [fitColumns, setFitColumns] = useState(false)
+  const [api, setApi] = useState<GridApi<Employee> | null>(null)
 
   const refreshStats = useCallback(() => {
     const api = apiRef.current
@@ -40,6 +42,7 @@ export default function App() {
   const handleGridReady = useCallback(
     (event: GridReadyEvent<Employee>) => {
       apiRef.current = event.api
+      setApi(event.api)
       readColumns(event.api)
       setStats(readStats(event.api))
     },
@@ -134,9 +137,17 @@ export default function App() {
             onToggleColumn={handleToggleColumn}
             onExport={handleExport}
             onReset={handleReset}
+            fitColumns={fitColumns}
+            onToggleFit={setFitColumns}
           />
           <div className="min-h-0 flex-1">
-            <EmployeeGrid rows={rows} onGridReady={handleGridReady} onViewChanged={refreshStats} />
+            <EmployeeGrid
+              rows={rows}
+              onGridReady={handleGridReady}
+              onViewChanged={refreshStats}
+              fitColumns={fitColumns}
+              gridApi={api}
+            />
           </div>
         </div>
       </main>

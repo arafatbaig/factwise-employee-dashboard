@@ -1,7 +1,8 @@
-import { useCallback } from 'react'
+import { useCallback, useEffect } from 'react'
 import { AgGridReact } from 'ag-grid-react'
 import type {
   GetRowIdParams,
+  GridApi,
   GridReadyEvent,
   RowSelectionOptions,
   ColDef,
@@ -79,11 +80,29 @@ interface Props {
   rows: Employee[]
   onGridReady: (event: GridReadyEvent<Employee>) => void
   onViewChanged: () => void
+  fitColumns: boolean
+  gridApi: GridApi<Employee> | null
 }
 
-export default function EmployeeGrid({ rows, onGridReady, onViewChanged }: Props) {
+export default function EmployeeGrid({ rows, onGridReady, onViewChanged, fitColumns, gridApi }: Props) {
   const getRowId = useCallback((params: GetRowIdParams<Employee>) => String(params.data.id), [])
 
+  const applyFit = useCallback(() => {
+    const api = gridApi
+    if (!api || api.isDestroyed()) return
+    if (fitColumns) api.sizeColumnsToFit()
+    else api.resetColumnState()
+  }, [fitColumns, gridApi])
+
+  useEffect(() => {
+    applyFit()
+  }, [applyFit])
+
+  useEffect(() => {
+    if (!fitColumns) return
+    window.addEventListener('resize', applyFit)
+    return () => window.removeEventListener('resize', applyFit)
+  }, [fitColumns, applyFit])
 
   return (
     <div className="h-full w-full">

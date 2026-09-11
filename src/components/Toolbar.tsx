@@ -16,6 +16,8 @@ interface Props {
   onToggleColumn: (colId: string, visible: boolean) => void
   onExport: () => void
   onReset: () => void
+  fitColumns: boolean
+  onToggleFit: (fit: boolean) => void
 }
 
 export default function Toolbar({
@@ -27,6 +29,8 @@ export default function Toolbar({
   onToggleColumn,
   onExport,
   onReset,
+  fitColumns,
+  onToggleFit,
 }: Props) {
   const [open, setOpen] = useState(false)
   const menuRef = useRef<HTMLDivElement>(null)
@@ -114,6 +118,20 @@ export default function Toolbar({
           </div>
         )}
       </div>
+
+      <button
+        type="button"
+        onClick={() => onToggleFit(!fitColumns)}
+        aria-pressed={fitColumns}
+        title={fitColumns ? 'Show full column widths (scrolls sideways)' : 'Fit all columns on screen'}
+        className={`rounded-lg border px-3 py-2 text-sm font-medium ${
+          fitColumns
+            ? 'border-indigo-200 bg-indigo-50 text-indigo-700 dark:border-indigo-500/40 dark:bg-indigo-500/10 dark:text-indigo-300'
+            : 'border-slate-200 bg-white text-slate-600 hover:bg-slate-50 dark:border-slate-700 dark:bg-slate-800 dark:text-slate-300 dark:hover:bg-slate-700'
+        }`}
+      >
+        Fit to screen
+      </button>
 
       <button
         type="button"
